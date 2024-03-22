@@ -1,0 +1,12 @@
+dataset:
+  path: release/data/robomimic/can/processed_data96.hdf5
+  num_data: 10
+  use_state: 1
+  state_stack: 3
+state_policy:
+  hidden_dim: 1024
+  dropout: 0.5
+  num_layer: 3
+use_wb: 1
+num_epoch: 10
+grad_clip: 100

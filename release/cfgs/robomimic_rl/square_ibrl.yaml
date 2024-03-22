@@ -1,0 +1,29 @@
+task_name: "NutAssemblySquare"
+rl_camera: "agentview"
+prop_stack: 3
+episode_length: 300
+stddev_max: 0.1
+bc_policy: "release/model/robomimic/square/model0.pt"
+preload_num_data: 50
+preload_datapath: "release/data/robomimic/square/processed_data96.hdf5"
+num_warm_up_episode: 50
+num_train_step: 250000
+replay_buffer_size: 1000
+use_wb: 1
+mp_eval: 1
+num_eval_episode: 50
+use_state: 0
+log_per_step: 10000
+q_agent:
+  act_method: "ibrl"
+  use_prop: 1
+  vit:
+    embed_style: "embed2"
+    depth: 1
+  actor:
+    dropout: 0.5
+    hidden_dim: 1024
+    feature_dim: 128
+  critic:
+    spatial_emb: 1024
+    hidden_dim: 1024

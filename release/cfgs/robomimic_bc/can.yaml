@@ -1,0 +1,6 @@
+dataset:
+  path: release/data/robomimic/can/processed_data96.hdf5
+  rl_camera: robot0_eye_in_hand
+  num_data: 10
+use_wb: 1
+num_epoch: 10

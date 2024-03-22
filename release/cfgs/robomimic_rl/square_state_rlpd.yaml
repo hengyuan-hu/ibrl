@@ -1,0 +1,25 @@
+task_name: "NutAssemblySquare"
+episode_length: 300
+stddev_max: 0.1
+use_state: 1
+state_stack: 3
+mix_rl_rate: 0.5
+preload_num_data: 50
+preload_datapath: "release/data/robomimic/square/processed_data96.hdf5"
+num_warm_up_episode: 50
+num_train_step: 300000
+replay_buffer_size: 1000
+use_wb: 1
+mp_eval: 1
+log_per_step: 10000
+num_eval_episode: 50
+num_critic_update: 5
+q_agent:
+  act_method: "rl"
+  state_critic:
+    num_q: 5
+    layer_norm: 1
+    hidden_dim: 1024
+  state_actor:
+    hidden_dim: 1024
+    dropout: 0

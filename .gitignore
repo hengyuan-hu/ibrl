@@ -1,0 +1,14 @@
+__pycache__/
+.ipynb_checkpoints/
+exps
+common_utils/build/
+.vscode
+wandb
+data/
+*.png
+*.pdf
+*.mp4
+*.gif
+.env
+release/model
+*.zip

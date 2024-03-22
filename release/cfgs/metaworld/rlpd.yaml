@@ -1,0 +1,20 @@
+episode_length: 100
+stddev_max: 0.1
+bc_policy: "assembly"
+preload_num_data: 3
+env_reward_scale: 1
+use_bc: 0
+mix_rl_rate: 0.5
+num_train_step: 100000
+replay_buffer_size: 500
+use_wb: 1
+num_eval_episode: 20
+q_agent:
+  act_method: "rl"
+  enc_type: "drq"
+  actor:
+    dropout: 0
+    hidden_dim: 1024
+    feature_dim: 64
+  critic:
+    feature_dim: 64

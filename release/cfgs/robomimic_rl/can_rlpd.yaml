@@ -1,0 +1,27 @@
+task_name: "PickPlaceCan"
+rl_camera: "robot0_eye_in_hand"
+prop_stack: 3
+episode_length: 200
+stddev_max: 0.1
+mix_rl_rate: 0.5
+preload_num_data: 10
+preload_datapath: "release/data/robomimic/can/processed_data96.hdf5"
+num_warm_up_episode: 40
+num_train_step: 200000
+replay_buffer_size: 1000
+use_wb: 1
+mp_eval: 1
+num_eval_episode: 50
+use_state: 0
+q_agent:
+  act_method: "rl"
+  use_prop: 1
+  vit:
+    embed_style: "embed2"
+    depth: 1
+  actor:
+    hidden_dim: 1024
+    feature_dim: 128
+  critic:
+    spatial_emb: 1024
+    hidden_dim: 1024

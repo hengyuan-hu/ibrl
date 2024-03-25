@@ -1,3 +1,4 @@
+"""metaworld uses a separate bc policy file to stay compatible with old model checkpoints"""
 from dataclasses import dataclass, field
 import torch
 import torch.nn as nn
@@ -55,7 +56,7 @@ class BcPolicy(nn.Module):
         mu = torch.tanh(mu)
         return mu
 
-    def act(self, obs: dict[str, torch.Tensor], *, eval_mode=True):
+    def act(self, obs: dict[str, torch.Tensor], *, eval_mode=True, cpu=True):
         assert eval_mode
         assert not self.training
 
@@ -65,11 +66,13 @@ class BcPolicy(nn.Module):
                 obs[k] = v.unsqueeze(0)
             unsqueezed = True
 
-        greedy_action = self.forward(obs)
+        greedy_action = self.forward(obs).detach()
 
         if unsqueezed:
             greedy_action = greedy_action.squeeze()
-        return greedy_action.detach().cpu()
+        if cpu:
+            greedy_action = greedy_action.cpu()
+        return greedy_action
 
     def loss(self, batch):
         image: torch.Tensor = batch.obs["obs"]

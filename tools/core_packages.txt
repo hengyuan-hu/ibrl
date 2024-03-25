@@ -1,4 +1,4 @@
 pip install Cython==0.29.36
 pip install git+https://github.com/Farama-Foundation/Metaworld.git@04be337a12305e393c0caf0cbf5ec7755c7c8feb
 pip install git+https://github.com/ARISE-Initiative/robosuite.git@v1.4.1
-pip install pyyaml pyrallis psutil tabulate matplotlib opencv-python cmake einops h5py rich scipy
+pip install pyyaml pyrallis psutil tabulate matplotlib opencv-python cmake einops h5py rich scipy wandb

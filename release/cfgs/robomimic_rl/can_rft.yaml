@@ -4,7 +4,7 @@ prop_stack: 3
 episode_length: 200
 stddev_max: 0.1
 add_bc_loss: 1
-load_pretrained_agent: "release/model/robomimic/square_pretrain/model0.pt"
+load_pretrained_agent: "release/model/robomimic/can_pretrain/model0.pt"
 preload_num_data: 10
 preload_datapath: "release/data/robomimic/can/processed_data96.hdf5"
 num_warm_up_episode: 40

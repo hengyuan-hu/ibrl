@@ -8,7 +8,7 @@ load_pretrained_agent: "release/model/robomimic/square_pretrain/model0.pt"
 preload_num_data: 50
 preload_datapath: "release/data/robomimic/square/processed_data96.hdf5"
 num_warm_up_episode: 50
-num_train_step: 250000
+num_train_step: 200000
 replay_buffer_size: 1000
 use_wb: 1
 mp_eval: 1

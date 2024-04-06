@@ -544,13 +544,15 @@ class QAgent(nn.Module):
                 act_method = self.cfg.act_method
                 self.cfg.act_method = "rl"
 
-                ref_bc_obs = bc_batch.obs.copy()  # shallow copy
-                ref_action = ref_agent.act(ref_bc_obs, eval_mode=True, cpu=False)
+                ref_obs = obs.copy()  # shallow copy
+                ref_obs.pop("feat")
+                ref_action = ref_agent.act(ref_obs, eval_mode=True, cpu=False)
 
                 # we first get the ref_action and then pop the feature
                 # then we get the curr_action so that the obs["feat"] is the current feature
                 # which can be used for computing q-values
-                bc_obs = bc_batch.obs
+                bc_obs = obs.copy()
+                bc_obs.pop("feat")
                 curr_action = self.act(bc_obs, eval_mode=True, cpu=False)
 
                 if isinstance(self.critic, Critic):

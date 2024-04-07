@@ -42,6 +42,7 @@ class QAgentConfig:
     # bc loss regularization
     bc_loss_coef: float = 0.1
     bc_loss_dynamic: int = 0  # dynamically scale bc loss weight
+    bc_reg_dev: int = 0
 
     def __post_init__(self):
         if self.bootstrap_method == "":
@@ -544,23 +545,33 @@ class QAgent(nn.Module):
                 act_method = self.cfg.act_method
                 self.cfg.act_method = "rl"
 
-                ref_obs = obs.copy()  # shallow copy
-                ref_obs.pop("feat")
-                ref_action = ref_agent.act(ref_obs, eval_mode=True, cpu=False)
+                if self.cfg.bc_reg_dev:
+                    ref_obs = obs.copy()  # shallow copy
+                    ref_obs.pop("feat")
+                    ref_action = ref_agent.act(ref_obs, eval_mode=True, cpu=False)
 
-                # we first get the ref_action and then pop the feature
-                # then we get the curr_action so that the obs["feat"] is the current feature
-                # which can be used for computing q-values
-                bc_obs = obs.copy()
-                bc_obs.pop("feat")
-                curr_action = self.act(bc_obs, eval_mode=True, cpu=False)
+                    # we first get the ref_action and then pop the feature
+                    # then we get the curr_action so that the obs["feat"] is the current feature
+                    # which can be used for computing q-values
+                    obs = obs.copy()
+                    obs.pop("feat")
+                    curr_action = self.act(obs, eval_mode=True, cpu=False)
+                else:
+                    ref_obs = bc_batch.obs.copy()  # shallow copy
+                    ref_action = ref_agent.act(ref_obs, eval_mode=True, cpu=False)
+
+                    # we first get the ref_action and then pop the feature
+                    # then we get the curr_action so that the obs["feat"] is the current feature
+                    # which can be used for computing q-values
+                    obs = bc_batch.obs
+                    curr_action = self.act(obs, eval_mode=True, cpu=False)
 
                 if isinstance(self.critic, Critic):
-                    curr_q = torch.min(*self.critic(bc_obs["feat"], bc_obs["prop"], curr_action))
-                    ref_q = torch.min(*self.critic(bc_obs["feat"], bc_obs["prop"], ref_action))
+                    curr_q = torch.min(*self.critic(obs["feat"], obs["prop"], curr_action))
+                    ref_q = torch.min(*self.critic(obs["feat"], obs["prop"], ref_action))
                 else:
-                    curr_q = self.critic.forward_k(bc_obs["state"], curr_action).min(-1)[0]
-                    ref_q = self.critic.forward_k(bc_obs["state"], ref_action).min(-1)[0]
+                    curr_q = self.critic.forward_k(obs["state"], curr_action).min(-1)[0]
+                    ref_q = self.critic.forward_k(obs["state"], ref_action).min(-1)[0]
 
                 ratio = (ref_q > curr_q).float().mean().item()
 

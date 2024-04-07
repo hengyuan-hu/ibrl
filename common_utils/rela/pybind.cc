@@ -52,7 +52,6 @@ PYBIND11_MODULE(rela, m) {
            py::arg("seed"),
            py::arg("prefetch"),
            py::arg("extra"))
-      .def("set_action_chunk", &SingleStepTransitionReplay::setActionChunk)
       .def("terminate", &SingleStepTransitionReplay::terminate)
       .def("size", &SingleStepTransitionReplay::size)
       .def("num_add", &SingleStepTransitionReplay::numAdd)

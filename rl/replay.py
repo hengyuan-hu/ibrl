@@ -74,11 +74,6 @@ class ReplayBuffer:
         self.num_success = 0
         self.num_episode = 0
 
-    def set_action_chunk(self, action_chunk):
-        self.replay.set_action_chunk(action_chunk)
-        if self.bc_replay is not None:
-            self.bc_replay.set_action_chunk(action_chunk)
-
     def new_episode(self, obs: dict[str, torch.Tensor]):
         self.episode_image_obs = defaultdict(list)
         self.episode.init({})

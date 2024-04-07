@@ -120,14 +120,8 @@ class SingleStepTransitionReplay : public Replay<SingleStepTransition> {
       int frameStack, int nStep, int capacity, int seed, int prefetch, float extra)
       : Replay(capacity, seed, prefetch, extra)
       , frameStack_(frameStack)
-      , nStep_(nStep)
-      , actionChunk_(1) {
+      , nStep_(nStep) {
     assert(nStep_ >= 1);
-  }
-
-  void setActionChunk(int actionChunk) {
-    assert(actionChunk > 0);
-    actionChunk_ = actionChunk;
   }
 
  protected:
@@ -135,7 +129,6 @@ class SingleStepTransitionReplay : public Replay<SingleStepTransition> {
 
   int frameStack_;
   int nStep_;
-  int actionChunk_;
 };
 
 }  // namespace rela

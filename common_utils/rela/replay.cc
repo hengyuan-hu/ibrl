@@ -78,23 +78,7 @@ SingleStepTransition SingleStepTransitionReplay::sample_(
       transition.nextObs = tensor_dict::cat(nextFrames, 0);
     }
 
-    // process actions, maybe action chunk
-    if (actionChunk_ == 1) {
-      transition.action = tensor_dict::index(episode.action, tIdx);
-    } else {
-      std::vector<TensorDict> actions;
-      for (int i = tIdx; i < tIdx + actionChunk_; ++i) {
-        if (i <= seqLen - 1) {
-          actions.push_back(tensor_dict::index(episode.action, i));
-        } else {
-          assert(actions.size() > 0);
-          auto zeroAction = tensor_dict::zerosLike(actions[0]);
-          actions.push_back(zeroAction);
-        }
-      }
-      transition.action = tensor_dict::cat(actions, 0);
-    }
-
+    transition.action = tensor_dict::index(episode.action, tIdx);
     transition.reward = episode.reward[tIdx];
     transition.bootstrap = episode.bootstrap[tIdx];
 

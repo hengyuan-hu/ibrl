@@ -5,6 +5,10 @@ Implementation of _Imitation Bootstrapped Reinforcement Learning (IBRL)_ and bae
 [![Paper](https://img.shields.io/badge/Paper-%20%F0%9F%93%84-blue)](https://arxiv.org/abs/2311.02198v4)
 [![Website](https://img.shields.io/badge/Website-%F0%9F%8C%90-orange)](https://ibrl.hengyuanhu.com/)
 
+## Note:
+
+[Sep 2024] A fix to `set_env.sh` is pushed to address the slow parallel evaluation problem in robomimic.
+
 ## Clone and compile
 
 ### Clone the repo.
